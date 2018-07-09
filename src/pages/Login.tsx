@@ -19,18 +19,18 @@ class Login extends React.Component<IHomeRouterProps> {
         return (
             <div className="page login-page">
                 <div className={classnames('form-wrap', { vanished: !state.showForm })}>
-                    <div className="form-item">
+                    <div className="form-item input">
                         <span>Username:</span>
                         <input value={state.userName} onChange={this.onInputChange.bind(this, 'userName')} />
                     </div>
-                    <div className="form-item">
+                    <div className="form-item input">
                         <span>Password:</span>
                         <input value={state.password} type="password" onChange={this.onInputChange.bind(this, 'password')} />
                     </div>
-                    <span className="button">
+                    <div className="form-item button">
                         {' '}
-                        ——— <a onClick={this.onLoginClick}>LOGIN</a> ———
-                    </span>
+                        ——— <button onClick={this.onLoginClick}>LOGIN</button> ———
+                    </div>
                 </div>
             </div>
         );
