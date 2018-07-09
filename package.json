@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.6.5",
+    "classnames": "^2.2.6",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
@@ -16,6 +17,7 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.4",
     "@types/jest": "^23.1.4",
     "@types/node": "^10.5.2",
     "@types/react": "^16.4.6",
