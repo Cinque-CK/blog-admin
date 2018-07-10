@@ -5,6 +5,7 @@
     },
     "rules": {
       "jsx-boolean-value": false,
+      "no-console": false,
       "object-literal-sort-keys": false
     }
 }
