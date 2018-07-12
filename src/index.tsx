@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import './static/css/normalize.css';
 import './static/css/customize.css';
+import App from './App';
 
 ReactDOM.render(
   <App />,

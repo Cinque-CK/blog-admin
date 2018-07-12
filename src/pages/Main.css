@@ -1,9 +1,60 @@
-.main-page .ant-sider--cus::after{
-    content:'';
+.main-page .sider__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    transition: padding .2s
+}
+
+.main-page .sider__header.collapsed{
+    padding: 0 16px
+}
+
+.main-page .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.main-page .avatar:hover {
+    
+}
+
+.main-page .toggle-icon {
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+}
+
+.main-page .toggle-icon:hover {
+    color: #fff;
+}
+
+.main-page .toggle-trigger-wrap {
     position: absolute;
-    top: 50%;
-    margin-top: -15px;
-    right: -10px;
-    width: 10px;
-    height: 30px;
+    top: 0;
+    right: -15px;
+    width: 15px;
+    height: 64px;
+    overflow: hidden;
+}
+
+.main-page .toggle-trigger{
+    display: block;
+    position: relative;
+    width: 0;
+    height: 0;
+    border-top: 32px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 32px solid transparent;
+    border-left: 15px solid #001529;
+    cursor: pointer;
+    transition: border-left-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.main-page .toggle-trigger:hover {
+    border-left-color: #40a9ff
 }

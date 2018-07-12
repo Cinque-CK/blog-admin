@@ -96,7 +96,7 @@ class Article extends React.Component<IHomeRouterProps> {
                         New
                     </Button>
                 </div>
-                <Table columns={columns} dataSource={state.articleList} />
+                <Table columns={columns} dataSource={state.articleList} bordered/>
             </div>
         );
     }

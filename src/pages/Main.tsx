@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Icon, Layout, Menu } from 'antd';
+import { Dropdown, Icon, Layout, Menu, Modal } from 'antd';
+import * as classnames from 'classnames';
+import { removeToken } from '../utils/lsUtil';
 import Article from './Article';
 import Release from './Release';
 import User from './User';
@@ -8,8 +10,11 @@ import Gallery from './Gallery';
 import Photo from './Photo';
 import Category from './Category';
 import Tag from './Tag';
+import defaultAvatar from '../static/images/default_avatar.png';
 import './Main.css'
 const { Header, Content, Sider } = Layout;
+const confirm = Modal.confirm;
+
 interface IHomeRouterProps {
     match: any;
     history: any;
@@ -19,29 +24,13 @@ class Main extends React.Component<IHomeRouterProps> {
         super(props);
         this.state = {
             collapsed: false,
-            selectedMenu: 'user'
+            selectedMenu: 'user',
+            userName: '',
+            avatarUrl: defaultAvatar
         };
     }
 
-    private toggle = (): void => {
-        const state: any = this.state;
-        this.setState({
-            collapsed: !state.collapsed
-        });
-    };
-
-    private onMenuItemClick = ({ key }: any) => {
-        const props: any = this.props;
-        const state: any = this.state;
-        if (state.selectedMenu !== key) {
-            this.setState({
-                selectedMenu: key
-            });
-            props.history.push(`${props.match.url}/${key}`);
-        }
-    };
-
-    public componentWillMount() {
+    private initPageInfo = ():void => {
         const props: any = this.props;
         const path: string | undefined = window.location.hash.split('/')[2];
         const currentRoute: string | undefined = path || 'user';
@@ -64,13 +53,81 @@ class Main extends React.Component<IHomeRouterProps> {
         }
     }
 
+    private initUser = ():void => {
+        // todo call api: get account detail
+        console.log('init user')
+    }
+
+    private onAvatarMenuItemClick = ({ key }: any) => {
+        switch(key){
+            case 'logout':
+                this.emitLogout();
+                break;
+            default:
+                return;
+        }
+    }
+
+    private emitLogout = ():void => {
+        confirm({
+            title: 'Alert',
+            content: 'Are you sure you want to logout?',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk: () => {
+                removeToken();
+                window.location.hash = '/login';
+            }
+        });
+    }
+
+    private siderToggle = (): void => {
+        const state: any = this.state;
+        this.setState({
+            collapsed: !state.collapsed
+        });
+    };
+
+    private onSiderMenuItemClick = ({ key }: any) => {
+        const props: any = this.props;
+        const state: any = this.state;
+        if (state.selectedMenu !== key) {
+            this.setState({
+                selectedMenu: key
+            });
+            props.history.push(`${props.match.url}/${key}`);
+        }
+    };
+
+    public componentWillMount() {
+        this.initPageInfo();
+        this.initUser();
+    }
+
     public render() {
         const state: any = this.state;
         const props: any = this.props;
+        const menu = (
+            <Menu onClick={this.onAvatarMenuItemClick}>
+                <Menu.Item key="logout">
+                    <span><Icon type="logout"/>Logout</span>
+                </Menu.Item>
+            </Menu>
+          );
         return (
             <Layout className="page main-page" style={{ height: '100%' }}>
                 <Sider className="ant-sider--cus" trigger={null} collapsible collapsed={state.collapsed}>
-                    <Menu theme="dark" mode="inline" selectedKeys={[state.selectedMenu]} onClick={this.onMenuItemClick}>
+                    <Header className={classnames('sider__header',{collapsed: state.collapsed})}>
+                        <Dropdown overlay={menu} trigger={['click']}>
+                            <img className="avatar" src={state.avatarUrl} alt="avatar"/>
+                        </Dropdown>
+                        <Icon className={classnames('toggle-icon', {hidden: state.collapsed})} type={state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.siderToggle} />
+                        <div className={classnames('toggle-trigger-wrap', {hidden: !state.collapsed})}>
+                            <span className="toggle-trigger" onClick={this.siderToggle}/>
+                        </div>
+                    </Header>
+                    <Menu theme="dark" mode="inline" selectedKeys={[state.selectedMenu]} onClick={this.onSiderMenuItemClick}>
                         <Menu.Item key="user">
                             <Icon type="user" />
                             <span>USER</span>
@@ -83,15 +140,17 @@ class Main extends React.Component<IHomeRouterProps> {
                             <Icon type="picture" />
                             <span>GALLERY</span>
                         </Menu.Item>
+                        <Menu.Item key="category">
+                            <Icon type="profile" />
+                            <span>CATEGORY</span>
+                        </Menu.Item>
+                        <Menu.Item key="tag">
+                            <Icon type="tag-o" />
+                            <span>TAG</span>
+                        </Menu.Item>
                     </Menu>
-                    <div>
-                        <Icon className="trigger" type={state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
-                    </div>
                 </Sider>
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <div>avatar</div>
-                    </Header>
                     <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                         <Route path={`${props.match.path}/user`} component={User} />
                         <Route path={`${props.match.path}/article`} component={Article} />
