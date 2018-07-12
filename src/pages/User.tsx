@@ -1,5 +1,5 @@
-import { Table } from 'antd';
 import * as React from 'react';
+import { Table } from 'antd';
 
 class User extends React.Component {
     constructor(props: any) {
