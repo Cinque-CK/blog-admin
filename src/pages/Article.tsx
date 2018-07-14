@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Button, Table, Icon, Modal } from 'antd';
+import { Button, Input, Icon, Modal, Table } from 'antd';
 const confirm = Modal.confirm;
+const Search = Input.Search;
 interface IHomeRouterProps {
     match: any;
     history: any;
@@ -12,6 +13,10 @@ class Article extends React.Component<IHomeRouterProps> {
         this.state = {
             articleList: []
         };
+    }
+
+    private onSearchClick = (value):void => {
+        console.log(value)
     }
 
     private onNewArticleClick = (): void => {
@@ -91,12 +96,17 @@ class Article extends React.Component<IHomeRouterProps> {
         ];
         return (
             <div className="page--inner article-page--inner">
-                <div className="">
-                    <Button type="primary" onClick={this.onNewArticleClick}>
-                        New
-                    </Button>
+                <div className="page--inner__header">
+                    <div className="search-wrap">
+                        <Search placeholder="search by title..." onSearch={this.onSearchClick} enterButton size="large"/>
+                    </div>
+                    <div className="btn-wrap">
+                        <Button type="primary" onClick={this.onNewArticleClick} size="large">
+                            New
+                        </Button>
+                    </div>
                 </div>
-                <Table columns={columns} dataSource={state.articleList} bordered/>
+                <Table columns={columns} dataSource={state.articleList} bordered />
             </div>
         );
     }

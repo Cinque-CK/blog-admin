@@ -1,0 +1,4 @@
+.ant-layout-content--cus {
+    display: flex;
+    flex-direction: column;
+}

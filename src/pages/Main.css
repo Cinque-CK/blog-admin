@@ -4,11 +4,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 25px;
-    transition: padding .2s
+    transition: padding 0.2s;
 }
 
-.main-page .sider__header.collapsed{
-    padding: 0 16px
+.main-page .sider__header.collapsed {
+    padding: 0 16px;
 }
 
 .main-page .avatar {
@@ -17,10 +17,11 @@
     border-radius: 50%;
     border: 1px solid transparent;
     cursor: pointer;
+    transition: border-color 0.3s;
 }
 
 .main-page .avatar:hover {
-    
+    border-color: #fff;
 }
 
 .main-page .toggle-icon {
@@ -42,7 +43,7 @@
     overflow: hidden;
 }
 
-.main-page .toggle-trigger{
+.main-page .toggle-trigger {
     display: block;
     position: relative;
     width: 0;
@@ -56,5 +57,5 @@
 }
 
 .main-page .toggle-trigger:hover {
-    border-left-color: #40a9ff
+    border-left-color: #40a9ff;
 }

@@ -9,3 +9,14 @@ body,
 .hidden {
     display: none !important;
 }
+
+.page--inner {
+    flex: 1;
+}
+
+.page--inner__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}

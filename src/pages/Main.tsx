@@ -151,7 +151,7 @@ class Main extends React.Component<IHomeRouterProps> {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+                    <Content className="ant-layout-content--cus" style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                         <Route path={`${props.match.path}/user`} component={User} />
                         <Route path={`${props.match.path}/article`} component={Article} />
                         <Route exact path={`${props.match.path}/release`} component={Release} />
