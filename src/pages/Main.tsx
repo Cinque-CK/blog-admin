@@ -4,7 +4,7 @@ import { Dropdown, Icon, Layout, Menu, Modal } from 'antd';
 import * as classnames from 'classnames';
 import { removeToken } from '../utils/lsUtil';
 import Article from './Article';
-import Release from './Release';
+import Publish from './Publish';
 import User from './User';
 import Gallery from './Gallery';
 import Photo from './Photo';
@@ -35,7 +35,7 @@ class Main extends React.Component<IHomeRouterProps> {
         const path: string | undefined = window.location.hash.split('/')[2];
         const currentRoute: string | undefined = path || 'user';
         switch (currentRoute) {
-            case 'release':
+            case 'publish':
                 this.setState({ selectedMenu: 'article' });
                 break;
             case 'photo':
@@ -154,8 +154,8 @@ class Main extends React.Component<IHomeRouterProps> {
                     <Content className="ant-layout-content--cus" style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                         <Route path={`${props.match.path}/user`} component={User} />
                         <Route path={`${props.match.path}/article`} component={Article} />
-                        <Route exact path={`${props.match.path}/release`} component={Release} />
-                        <Route path={`${props.match.path}/release/:id`} component={Release} />
+                        <Route exact path={`${props.match.path}/publish`} component={Publish} />
+                        <Route path={`${props.match.path}/publish/:id`} component={Publish} />
                         <Route path={`${props.match.path}/gallery`} component={Gallery} />
                         <Route exact path={`${props.match.path}/photo`} component={Photo} />
                         <Route path={`${props.match.path}/photo/id`} component={Photo} />

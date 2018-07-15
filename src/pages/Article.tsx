@@ -21,12 +21,12 @@ class Article extends React.Component<IHomeRouterProps> {
 
     private onNewArticleClick = (): void => {
         const props: any = this.props;
-        props.history.push(`release`);
+        props.history.push(`publish`);
     };
 
     private onEditClick = (id: number): void => {
         const props: any = this.props;
-        props.history.push(`release/${id}`);
+        props.history.push(`publish/${id}`);
     };
 
     private onDeleteClick = (id: number): void => {
@@ -70,7 +70,7 @@ class Article extends React.Component<IHomeRouterProps> {
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
-                render: record => <span>{record === 1 ? 'Released' : 'Draft'}</span>
+                render: record => <span>{record === 1 ? 'Published' : 'Draft'}</span>
             },
             {
                 title: 'Created',
@@ -89,7 +89,7 @@ class Article extends React.Component<IHomeRouterProps> {
                 render: record => (
                     <span>
                         <Icon type="edit" onClick={this.onEditClick.bind(this, record.id)} />
-                        <Icon type="edit" onClick={this.onDeleteClick.bind(this, record.id)} />
+                        <Icon type="delete" onClick={this.onDeleteClick.bind(this, record.id)} />
                     </span>
                 )
             }

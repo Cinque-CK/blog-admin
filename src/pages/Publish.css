@@ -1,0 +1,11 @@
+.publish-page--inner .page-content__body {
+    position: relative;
+}
+
+.publish-page--inner .quill-editor{
+    position: absolute;
+    top: 60px;
+    right: 0;
+    bottom: 40px;
+    left: 0;
+}
