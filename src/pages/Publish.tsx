@@ -1,20 +1,35 @@
 import * as React from 'react';
-import { Button, Input, Radio, Select } from 'antd';
+import { Button, Input, Modal, Radio, Select } from 'antd';
 import ReactQuill from 'react-quill';
+import { getArticle, setArticle, removeArticle } from '../utils/lsUtil';
 import 'react-quill/dist/quill.snow.css';
 import './Publish.css';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+const confirm = Modal.confirm;
 
-interface IHomeRouterProps {
+interface IComponentProps {
     match: any;
     history: any;
 }
-class Publish extends React.Component<IHomeRouterProps> {
+interface IComponentState {
+    action: number, // 1-add 2-edit
+    categories: object[],
+    tags: object[],
+    articleTitle: string,
+    articleContent: string,
+    articleCategory: string,
+    articleTags: string[],
+    articlePublicity: boolean
+}
+class Publish extends React.Component<IComponentProps, IComponentState> {
     constructor(props: any) {
         super(props);
         this.state = {
             action: 1, // 1-add 2-edit
+            categories: [],
+            tags: [],
+
             articleTitle: '',
             articleContent: '',
             articleCategory: '',
@@ -25,6 +40,7 @@ class Publish extends React.Component<IHomeRouterProps> {
     }
 
     private quillRef: any;
+    private autoSaveTimer: number | undefined = undefined;
 
     private getCategories = () => {
         console.log('categories')
@@ -56,6 +72,14 @@ class Publish extends React.Component<IHomeRouterProps> {
         this.setState({
             articleContent: value
         })
+        if (!this.autoSaveTimer) {
+            this.autoSaveTimer = window.setInterval(()=>{
+                const {articleTitle, articleContent, articleCategory, articleTags, articlePublicity} = this.state;
+                setArticle(JSON.stringify({
+                    articleTitle, articleContent, articleCategory, articleTags, articlePublicity
+                }))
+            },120000)
+        }
     }
 
     private onArticleCategoryChange = value => {
@@ -77,11 +101,13 @@ class Publish extends React.Component<IHomeRouterProps> {
     }
 
     private onSaveDraftClick = () => {
-        console.log('save draft')
+        console.log('save draft');
+        clearInterval(this.autoSaveTimer)
     }
 
     private onPublishClick = () => {
         console.log('publish article')
+        clearInterval(this.autoSaveTimer)
     }
 
     public componentWillMount(){
@@ -95,6 +121,26 @@ class Publish extends React.Component<IHomeRouterProps> {
             this.setState({
                 action: 2
             })
+        } else {
+            // check exist article in localstorage
+            const lsArticle = getArticle();
+            if(lsArticle){
+                confirm({
+                    title: 'Info',
+                    content: 'The last article is not saved, continue to edit?',
+                    okText: 'Continue',
+                    cancelText: 'New',
+                    onOk:() => {
+                        const {articleTitle, articleContent, articleCategory, articleTags, articlePublicity} = JSON.parse(lsArticle);
+                        this.setState({
+                            articleTitle, articleContent, articleCategory, articleTags, articlePublicity
+                        })
+                    },
+                    onCancel:() => {
+                        return;
+                    },
+                });
+            }
         }
     }
 
@@ -143,6 +189,9 @@ class Publish extends React.Component<IHomeRouterProps> {
                         <div className="form-item">
                             <span className="label">Category</span>
                             <Select className="full-width" value={state.articleCategory} onChange={this.onArticleCategoryChange}>
+                                {/* {
+                                    state.categories.map(category => <Option key={category.id} value={category.name}>{category.name}</Option>)
+                                } */}
                                 <Option key="0">Techblog</Option>
                                 <Option key="1">Travels</Option>
                                 <Option key="2">Jotting</Option>
@@ -156,6 +205,9 @@ class Publish extends React.Component<IHomeRouterProps> {
                                 value={state.articleTags}
                                 onChange={this.onArticleTagsChange}
                             >
+                                {/* {
+                                    state.tags.map(tag => <Option key={tag.id} value={tag.name}>{tag.name}</Option>)
+                                } */}
                                 <Option key="0">reactjs</Option>
                                 <Option key="1">javascript</Option>
                                 <Option key="2">html</Option>
