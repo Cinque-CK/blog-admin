@@ -1,19 +1,19 @@
 export function getToken() : string {
-    return localStorage.getItem('blog-token') || '';
+    return localStorage.getItem('blog-admin-token') || '';
 }
 export function setToken(token : string) : void {
-    localStorage.setItem('blog-token', token);
+    localStorage.setItem('blog-admin-token', token);
 }
 export function removeToken() : void {
-    localStorage.removeItem('blog-token');
+    localStorage.removeItem('blog-admin-token');
 }
 
 export function getArticle() : string {
-    return localStorage.getItem('blog-article') || '';
+    return localStorage.getItem('blog-admin-article') || '';
 }
 export function setArticle(article : string) : void {
-    localStorage.setItem('blog-article', article);
+    localStorage.setItem('blog-admin-article', article);
 }
 export function removeArticle() : void {
-    localStorage.removeItem('blog-article');
+    localStorage.removeItem('blog-admin-article');
 }

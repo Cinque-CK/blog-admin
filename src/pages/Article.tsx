@@ -62,23 +62,18 @@ class Article extends React.Component<IHomeRouterProps> {
                 key: 'tag'
             },
             {
-                title: 'Author',
-                dataIndex: 'author',
-                key: 'author'
-            },
-            {
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
                 render: record => <span>{record === 1 ? 'Published' : 'Draft'}</span>
             },
             {
-                title: 'Created',
+                title: 'Create Time',
                 dataIndex: 'createTime',
                 key: 'createTime'
             },
             {
-                title: 'Updated',
+                title: 'Update Time',
                 dataIndex: 'updateTime',
                 key: 'updateTime'
             },
